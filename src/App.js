@@ -1,9 +1,9 @@
-import './App.css'
+
 
 function App () {
   return (
-    <div className="App">
-      <h1>Hello world</h1>
+    <div>
+      <h1 className="bg-purple-800 text-white">Hello world!</h1>
     </div>
   )
 }
