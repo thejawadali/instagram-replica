@@ -1,9 +1,9 @@
-
+import Navbar from "./components/NavBar"
 
 function App () {
   return (
-    <div>
-      <h1 className="bg-purple-800 text-white">Hello world!</h1>
+    <div className="bg-gray-100 w-full h-screen">
+      <Navbar />
     </div>
   )
 }
