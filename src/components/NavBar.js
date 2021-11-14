@@ -5,7 +5,7 @@ import { FiPlusSquare, FiSend, FiHeart } from "react-icons/fi"
 
 function NavBar () {
   return (
-    <nav className="border-b border-gray-200 bg-white px-4 py-3 flex justify-center">
+    <nav className="border-b border-gray-200 bg-white px-4 py-3 flex justify-center sticky top-0">
       <div className="w-full md:w-10/12 lg:w-1/2 flex justify-between items-center">
         {/* Logo */}
         <img className="w-28" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="logo" />

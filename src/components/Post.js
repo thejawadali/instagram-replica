@@ -6,7 +6,7 @@ import Avatar from "./Avatar"
 
 function Post () {
   return (
-    <div className="border bg-white">
+    <div className="border bg-white my-10">
       {/* Post Header */}
       <div className="flex items-center px-4 py-3">
         {/* Avatar */}
