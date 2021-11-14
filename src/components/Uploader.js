@@ -24,6 +24,10 @@ function Uploader ( { isActive, closeModal } ) {
 
   function AddPost ( e ) {
     e.preventDefault()
+    if (!localStorage.getItem("userName")) {
+      alert("Login required")
+      return
+    }
     if ( !imageToUpload || uploadingStarts) {
       alert( "Upload Image first or uploading started already" )
       return
@@ -43,7 +47,7 @@ function Uploader ( { isActive, closeModal } ) {
             createdAt: serverTimestamp(),
             caption,
             image: url,
-            userName: "Jawad Ali"
+            userName: localStorage.getItem("userName")
           } ).then( () => {
             setCaption( "" )
             setImage( "" )

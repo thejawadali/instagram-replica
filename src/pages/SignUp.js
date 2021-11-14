@@ -23,7 +23,7 @@ function SignIn () {
         setName( "" )
         setEmail( "" )
         setPassword( "" )
-        console.log(user);
+        localStorage.setItem("userName", user.displayName)
         window.history.pushState({}, undefined, "/");
         window.location.reload()  
       } )

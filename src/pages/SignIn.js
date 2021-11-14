@@ -16,7 +16,7 @@ function SignIn () {
     const auth = getAuth()
     signInWithEmailAndPassword( auth, email, password ).then( ( creds ) => {
       const user = creds.user
-      console.log( user )
+      localStorage.setItem("userName", user.displayName)
       setPassword( "" )
       setEmail( "" )
       window.history.pushState({}, undefined, "/");
@@ -26,6 +26,8 @@ function SignIn () {
     } )
 
   }
+
+
 
   useEffect( () => {
     if ( validateEmail( email ) && password.length >= 8 ) {
