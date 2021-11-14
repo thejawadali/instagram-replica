@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { collection, onSnapshot, query } from "firebase/firestore"
+import {orderBy, collection, onSnapshot, query } from "firebase/firestore"
 import Navbar from "./components/NavBar"
 import Post from "./components/Post"
 import { Routes, Route } from "react-router-dom"
@@ -15,7 +15,7 @@ function App () {
   // fetch posts from db
   useEffect( () => {
     //load posts from firebase
-    onSnapshot( query( collection( db, "insta-posts" ) ), snapshot => {
+    onSnapshot( query( collection( db, "insta-posts" ), orderBy("timestamp", "desc") ), snapshot => {
       setPosts( snapshot.docs.map( doc => ( {
         id: doc.id,
         post: doc.data()
@@ -32,7 +32,7 @@ function App () {
   }, [] )
 
   return (
-    <div className="bg-gray-100 w-full">
+    <div className="bg-gray-100 w-full min-h-screen">
       <Routes>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/" element={<Home posts={posts} />} />
