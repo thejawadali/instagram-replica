@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { collection, onSnapshot, query } from "firebase/firestore"
 import Navbar from "./components/NavBar"
 import Post from "./components/Post"
+import { Routes, Route, Link } from "react-router-dom"
+import SignIn from "./pages/SignIn"
 import db from "./firebase"
 
 function App () {
@@ -29,12 +31,23 @@ function App () {
 
   return (
     <div className="bg-gray-100 w-full">
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/test" element={<Home posts={posts} />} />
+      </Routes>
+
+    </div>
+  )
+}
+
+function Home ( { posts } ) {
+  return (
+    <div>
       <Navbar />
       <div className="max-w-xl mx-auto py-5">
         {posts.map( post => <Post key={post.id} post={post.post} /> )}
       </div>
-    </div>
-  )
+    </div> )
 }
 
 export default App
