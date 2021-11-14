@@ -15,7 +15,7 @@ function App () {
   // fetch posts from db
   useEffect( () => {
     //load posts from firebase
-    onSnapshot( query( collection( db, "insta-posts" ), orderBy("timestamp", "desc") ), snapshot => {
+    onSnapshot( query( collection( db, "insta-posts" ), orderBy("createdAt", "desc") ), snapshot => {
       setPosts( snapshot.docs.map( doc => ( {
         id: doc.id,
         post: doc.data()
