@@ -2,11 +2,12 @@ import { useEffect, useState } from "react"
 import { collection, onSnapshot, query } from "firebase/firestore"
 import Navbar from "./components/NavBar"
 import Post from "./components/Post"
-import { Routes, Route, Link } from "react-router-dom"
+import { Routes, Route} from "react-router-dom"
 import SignIn from "./pages/SignIn"
 import db from "./firebase"
 
 function App () {
+  
   const [posts, setPosts] = useState( [] )
 
 
