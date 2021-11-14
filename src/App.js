@@ -34,9 +34,9 @@ function App () {
   return (
     <div className="bg-gray-100 w-full">
       <Routes>
-        <Route path="/" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/" element={<Home posts={posts} />} />
         <Route path="/signup" element={<SignUp/> } />
-        <Route path="/test" element={<Home posts={posts} />} />
       </Routes>
 
     </div>

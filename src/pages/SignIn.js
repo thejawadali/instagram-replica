@@ -19,6 +19,8 @@ function SignIn () {
       console.log( user )
       setPassword( "" )
       setEmail( "" )
+      window.history.pushState({}, undefined, "/");
+      window.location.reload()
     } ).catch( ( err ) => {
       alert( err.message )
     } )
