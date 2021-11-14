@@ -4,6 +4,7 @@ import Navbar from "./components/NavBar"
 import Post from "./components/Post"
 import { Routes, Route} from "react-router-dom"
 import SignIn from "./pages/SignIn"
+import SignUp from "./pages/SignUp"
 import db from "./firebase"
 
 function App () {
@@ -34,6 +35,7 @@ function App () {
     <div className="bg-gray-100 w-full">
       <Routes>
         <Route path="/" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp/> } />
         <Route path="/test" element={<Home posts={posts} />} />
       </Routes>
 
