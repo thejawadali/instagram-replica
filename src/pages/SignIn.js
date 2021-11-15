@@ -17,6 +17,7 @@ function SignIn () {
     signInWithEmailAndPassword( auth, email, password ).then( ( creds ) => {
       const user = creds.user
       localStorage.setItem("userName", user.displayName)
+      localStorage.setItem("profilePic", user.photoURL)
       setPassword( "" )
       setEmail( "" )
       window.history.pushState({}, undefined, "/");

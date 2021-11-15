@@ -4,6 +4,7 @@ import { AiFillHome } from "react-icons/ai"
 import { FiHeart, FiPlusSquare, FiSend } from "react-icons/fi"
 import { getFirstLetterOfUserName } from "../utils"
 import PostUploader from "./PostUploader";
+import Avatar from "./Avatar";
 
 function NavBar () {
   const [showModal, setShowModal] = useState( false )
@@ -24,7 +25,8 @@ function NavBar () {
           <FiSend className="cursor-pointer w-6 h-6  mx-2" />
           <FiPlusSquare onClick={addPost} className="cursor-pointer w-6 h-6  mx-2" />
           <FiHeart className="cursor-pointer w-6 h-6  mx-2" />
-          <span className="cursor-pointer w-6 h-6  mx-2 border border-black flex items-center justify-center rounded-full">{getFirstLetterOfUserName(localStorage.getItem("userName"))}</span>
+          <Avatar letter={getFirstLetterOfUserName(localStorage.getItem("userName"))} image={localStorage.getItem("profilePic")} small/>
+          {/* <span className="cursor-pointer w-6 h-6  mx-2 border border-black flex items-center justify-center rounded-full">{}</span> */}
         </div>
         {createPortal( <PostUploader isActive={showModal} closeModal={() => { setShowModal( false ) }} />, document.getElementById( "modal-root" ) )}
 
