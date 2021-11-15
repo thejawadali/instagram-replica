@@ -12,7 +12,7 @@ function Post ({post}) {
       {/* Post Header */}
       <div className="flex items-center px-4 py-3">
         {/* Avatar */}
-        <Avatar letter={getFirstLetterOfUserName(post.userName)} />
+        <Avatar letter={getFirstLetterOfUserName(post.userName)} image={post.profilePhoto} />
         <div className="flex flex-col mx-3 ">
           <h2 className="cursor-pointer text-lg text-bold">{post.userName}</h2>
           <p className="text-xs cursor-pointer">{post.city}</p>
