@@ -47,7 +47,8 @@ function Uploader ( { isActive, closeModal } ) {
             createdAt: serverTimestamp(),
             caption,
             image: url,
-            userName: localStorage.getItem("userName")
+            userName: localStorage.getItem("userName"),
+            profilePic: localStorage.getItem("profilePic")
           } ).then( () => {
             setCaption( "" )
             setImage( "" )
