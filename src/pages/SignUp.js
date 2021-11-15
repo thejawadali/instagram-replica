@@ -3,8 +3,9 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { validateEmail } from "../utils"
 import AvatarUploader from "../components/AvatarUploader"
+import imageCompression from 'browser-image-compression';
 
-function SignIn () {
+function SignUp () {
   const [name, setName] = useState( "" )
   const [email, setEmail] = useState( "" )
   const [password, setPassword] = useState( "" )
@@ -14,7 +15,7 @@ function SignIn () {
 
   const storage = getStorage()
 
-  function signIn ( e ) {
+  async function signUp ( e ) {
     e.preventDefault()
     if ( !validity ) {
       console.warn( "Invalid form" )
@@ -40,7 +41,11 @@ function SignIn () {
           alert( error.message )
         } )
     } else {
-      const uploadTask = uploadBytesResumable( ref( storage, `profiles/${profilePic.name}` ), profilePic )
+      // compress image size
+      const fileToUpload = await imageCompression(profilePic, {
+        maxSizeMB: 1
+      })
+      const uploadTask = uploadBytesResumable( ref( storage, `profiles/${profilePic.name}` ), fileToUpload )
       uploadTask.on( 'state_changed',
         ( snapshot ) => {
           setProgress( ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100 )
@@ -95,7 +100,7 @@ function SignIn () {
         <progress value={progress} max="100" className={`w-full h-2 mb-9 ${progress > 0 ? "opacity-100" : "opacity-0"}`}/>
         {/* insta logo */}
         <img className="w-28" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="logo" />
-        <form onSubmit={signIn} className="flex flex-col my-4 w-full px-12">
+        <form onSubmit={signUp} className="flex flex-col my-4 w-full px-12">
           <AvatarUploader handleChange={uploadProfilePic} />
           <input value={name} onChange={( e ) => { setName( e.target.value ) }} type="text" placeholder="Name" className="border px-2 py-1 text-sm outline-none bg-gray-50 active:bg-gray-100 my-2" />
           <input value={email} onChange={( e ) => { setEmail( e.target.value ) }} type="email" placeholder="Email" className="border px-2 py-1 text-sm outline-none bg-gray-50 active:bg-gray-100 my-2" />
@@ -108,4 +113,4 @@ function SignIn () {
   )
 }
 
-export default SignIn
+export default SignUp

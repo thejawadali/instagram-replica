@@ -44,7 +44,7 @@ function AvatarUploader ( { handleChange } ) {
         <AiFillCamera />
         <span>Change Image</span>
       </label>
-      <input className="hidden" id="file" type="file" onChange={loadFile} />
+      <input accept=".jpg, .png" className="hidden" id="file" type="file" onChange={loadFile} />
       <img className="absolute object-cover w-28 h-28 shadow-lg rounded-full z-0" src={imageURL} alt="profilePic" />
     </div>
   )

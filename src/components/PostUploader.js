@@ -2,6 +2,7 @@ import { addDoc, collection, serverTimestamp} from "firebase/firestore"
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import React, { useState } from 'react'
 import { BsFillImageFill } from "react-icons/bs"
+import imageCompression from 'browser-image-compression';
 import db from "../firebase"
 
 
@@ -22,7 +23,7 @@ function Uploader ( { isActive, closeModal } ) {
     }
   }
 
-  function AddPost ( e ) {
+  async function AddPost ( e ) {
     e.preventDefault()
     if (!localStorage.getItem("userName")) {
       alert("Login required")
@@ -32,8 +33,14 @@ function Uploader ( { isActive, closeModal } ) {
       alert( "Upload Image first or uploading started already" )
       return
     }
+
+    const fileToUpload = await imageCompression(imageToUpload, {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1024
+    })
+
     setUploadingStarts(true)
-    const uploadTask = uploadBytesResumable( ref( storage, `posts/${imageToUpload.name}` ), imageToUpload )
+    const uploadTask = uploadBytesResumable( ref( storage, `posts/${imageToUpload.name}` ), fileToUpload )
     uploadTask.on( 'state_changed',
       ( snapshot ) => {
         setProgress( ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100 )
@@ -47,6 +54,7 @@ function Uploader ( { isActive, closeModal } ) {
             createdAt: serverTimestamp(),
             caption,
             image: url,
+            likes: 0,
             userName: localStorage.getItem("userName"),
             profilePic: localStorage.getItem("profilePic")
           } ).then( () => {
@@ -99,7 +107,7 @@ function Uploader ( { isActive, closeModal } ) {
                         <h1 className="my-3 text-gray-600">Drop Photo Here</h1>
                         <label htmlFor="uploader" >
                           <span className="bg-blue-500 text-white px-3 rounded py-1 cursor-pointer">Select from computer</span>
-                          <input accept=".gif, .jpg, .png," onChange={Upload} type="file" id="uploader" className="hidden" />
+                          <input accept=".gif, .jpg, .png" onChange={Upload} type="file" id="uploader" className="hidden" />
                         </label>
                       </div>
                     ) : ( <div>
