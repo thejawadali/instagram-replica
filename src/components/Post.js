@@ -1,16 +1,18 @@
 import { FaRegComment } from "react-icons/fa"
 import { FiHeart, FiSend } from "react-icons/fi"
 import { MdBookmarkBorder } from "react-icons/md"
+import { getFirstLetterOfUserName } from "../utils"
 import Avatar from "./Avatar"
 
 
 function Post ({post}) {
+  
   return (
     <div className="border bg-white my-10">
       {/* Post Header */}
       <div className="flex items-center px-4 py-3">
         {/* Avatar */}
-        <Avatar />
+        <Avatar letter={getFirstLetterOfUserName(post.userName)} />
         <div className="flex flex-col mx-3 ">
           <h2 className="cursor-pointer text-lg text-bold">{post.userName}</h2>
           <p className="text-xs cursor-pointer">{post.city}</p>

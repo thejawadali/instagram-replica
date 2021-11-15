@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { createPortal } from "react-dom"
 import { AiFillHome } from "react-icons/ai"
 import { FiHeart, FiPlusSquare, FiSend } from "react-icons/fi"
+import { getFirstLetterOfUserName } from "../utils"
 import PostUploader from "./Uploader";
 
 function NavBar () {
@@ -23,7 +24,7 @@ function NavBar () {
           <FiSend className="cursor-pointer w-6 h-6  mx-2" />
           <FiPlusSquare onClick={addPost} className="cursor-pointer w-6 h-6  mx-2" />
           <FiHeart className="cursor-pointer w-6 h-6  mx-2" />
-          <span className="cursor-pointer w-6 h-6  mx-2 border border-black flex items-center justify-center rounded-full">A</span>
+          <span className="cursor-pointer w-6 h-6  mx-2 border border-black flex items-center justify-center rounded-full">{getFirstLetterOfUserName(localStorage.getItem("userName"))}</span>
         </div>
         {createPortal( <PostUploader isActive={showModal} closeModal={() => { setShowModal( false ) }} />, document.getElementById( "modal-root" ) )}
 
