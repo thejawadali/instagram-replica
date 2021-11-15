@@ -3,7 +3,7 @@ import { createPortal } from "react-dom"
 import { AiFillHome } from "react-icons/ai"
 import { FiHeart, FiPlusSquare, FiSend } from "react-icons/fi"
 import { getFirstLetterOfUserName } from "../utils"
-import PostUploader from "./Uploader";
+import PostUploader from "./PostUploader";
 
 function NavBar () {
   const [showModal, setShowModal] = useState( false )

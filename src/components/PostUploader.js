@@ -33,7 +33,7 @@ function Uploader ( { isActive, closeModal } ) {
       return
     }
     setUploadingStarts(true)
-    const uploadTask = uploadBytesResumable( ref( storage, `images/${imageToUpload.name}` ), imageToUpload )
+    const uploadTask = uploadBytesResumable( ref( storage, `posts/${imageToUpload.name}` ), imageToUpload )
     uploadTask.on( 'state_changed',
       ( snapshot ) => {
         setProgress( ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100 )
