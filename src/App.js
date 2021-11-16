@@ -48,7 +48,7 @@ function Home ( { posts } ) {
     <div>
       <Navbar />
       <div className="max-w-xl mx-auto py-5">
-        {posts.map( post => <Post key={post.id} post={post.post} /> )}
+        {posts.map( post => <Post key={post.id} post={post.post} postId={post.id} /> )}
       </div>
     </div> )
 }

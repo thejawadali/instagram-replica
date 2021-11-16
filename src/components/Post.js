@@ -3,19 +3,19 @@ import { FiHeart, FiSend } from "react-icons/fi"
 import { MdBookmarkBorder } from "react-icons/md"
 import { getFirstLetterOfUserName } from "../utils"
 import Avatar from "./Avatar"
-import { addDoc, collection, serverTimestamp } from "firebase/firestore"
+import { addDoc, collection, serverTimestamp, doc, updateDoc } from "firebase/firestore"
 import db from "../firebase"
 import { useState } from "react"
 
 
-function Post ( { post } ) {
+function Post ( { post, postId } ) {
 
   const [isActive, setIsActive] = useState( false )
   const [caption, setCaption] = useState( "" )
 
   function closeModal () {
     setIsActive( false )
-    setCaption("")
+    setCaption( "" )
   }
   function openModal () {
     if ( post.userName === localStorage.getItem( "userName" ) ) {
@@ -25,7 +25,19 @@ function Post ( { post } ) {
     setIsActive( true )
   }
 
-  async function share (e) {
+
+  async function likePost () {
+    const ref = doc( db, "insta-posts", postId )
+    try {
+      await updateDoc( ref, {
+        likes: post.likes + 1
+      } )
+    } catch ( error ) {
+      console.error( error.message )
+    }
+  }
+
+  async function share ( e ) {
     e.preventDefault()
     try {
       await addDoc( collection( db, "insta-posts" ), {
@@ -53,11 +65,11 @@ function Post ( { post } ) {
         </div>
       </div>
       {/* image */}
-      <img className="w-full border-t border-b object-contain" src={post.image} alt="postImage" />
+      <img onDoubleClick={likePost} className="w-full border-t border-b object-contain" src={post.image} alt="postImage" />
       {/* Actions */}
       <div className="flex px-2 py-4 justify-between">
         <div className="flex ">
-          <FiHeart className="cursor-pointer w-6 h-6 font-thin mx-2" />
+          <FiHeart onClick={likePost} className="cursor-pointer w-6 h-6 font-thin mx-2" />
           <FaRegComment className="cursor-pointer w-6 h-6 font-thin mx-2" />
           <FiSend onClick={openModal} className="cursor-pointer w-6 h-6 font-thin mx-2" />
         </div>
