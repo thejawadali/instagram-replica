@@ -1,11 +1,10 @@
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore"
+import { useState } from "react"
 import { FaRegComment } from "react-icons/fa"
 import { FiHeart, FiSend } from "react-icons/fi"
-import { MdBookmarkBorder } from "react-icons/md"
+import db from "../firebase"
 import { getFirstLetterOfUserName } from "../utils"
 import Avatar from "./Avatar"
-import { addDoc, collection, serverTimestamp, doc, updateDoc } from "firebase/firestore"
-import db from "../firebase"
-import { useState } from "react"
 
 
 function Post ( { post, postId } ) {
@@ -73,7 +72,7 @@ function Post ( { post, postId } ) {
           <FaRegComment className="cursor-pointer w-6 h-6 font-thin mx-2" />
           <FiSend onClick={openModal} className="cursor-pointer w-6 h-6 font-thin mx-2" />
         </div>
-        <MdBookmarkBorder className="cursor-pointer w-7 h-7 font-thin mx-2" />
+        {/* <MdBookmarkBorder className="cursor-pointer w-7 h-7 font-thin mx-2" /> */}
       </div>
       {/* likes */}
       <p className="text-sm font-bold mx-4 mb-2">{post.likes || "0"} likes</p>

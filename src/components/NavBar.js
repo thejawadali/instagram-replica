@@ -1,12 +1,12 @@
+import { getAuth, signOut } from "firebase/auth"
 import React, { useState } from 'react'
 import { createPortal } from "react-dom"
 import { AiFillHome } from "react-icons/ai"
-import { FiHeart, FiPlusSquare, FiLogOut, FiSend } from "react-icons/fi"
+import { FiLogOut, FiPlusSquare } from "react-icons/fi"
+import { useNavigate } from "react-router-dom"
 import { getFirstLetterOfUserName } from "../utils"
-import { useNavigate } from "react-router-dom";
-import PostUploader from "./PostUploader"
-import { getAuth, signOut } from "firebase/auth"
 import Avatar from "./Avatar"
+import PostUploader from "./PostUploader"
 
 function NavBar () {
   let navigate = useNavigate();
@@ -37,9 +37,9 @@ function NavBar () {
         {/* Icons */}
         <div className="cursor-pointer flex items-center">
           <AiFillHome className="cursor-pointer w-6 h-6 mx-2" />
-          <FiSend className="cursor-pointer w-6 h-6  mx-2" />
+          {/* <FiSend className="cursor-pointer w-6 h-6  mx-2" /> */}
+          {/* <FiHeart className="cursor-pointer w-6 h-6  mx-2" /> */}
           <FiPlusSquare onClick={addPost} className="cursor-pointer w-6 h-6  mx-2" />
-          <FiHeart className="cursor-pointer w-6 h-6  mx-2" />
           <div onClick={() => { setDialogOpened( dialogOpened ? false : true ) }}>
             <Avatar letter={getFirstLetterOfUserName( localStorage.getItem( "userName" ) )} image={localStorage.getItem( "profilePic" )} small />
             {dialogOpened &&
