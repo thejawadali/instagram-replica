@@ -2,6 +2,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import React, { useEffect, useState } from 'react'
 import { validateEmail } from "../utils"
 
+
 function SignIn () {
   const [email, setEmail] = useState( "" )
   const [password, setPassword] = useState( "" )
@@ -28,6 +29,10 @@ function SignIn () {
 
   }
 
+  function jugad() {
+    setEmail("bubloo@nit.com")
+    setPassword("123123123")
+  }
 
 
   useEffect( () => {
@@ -42,7 +47,7 @@ function SignIn () {
     <div className="w-full h-screen flex justify-center items-center">
       {/* container */}
       <div className="bg-white border w-96 flex flex-col items-center py-9">
-        <img className="w-28" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="logo" />
+        <img onDoubleClick={jugad} className="w-28" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="logo" />
         <form onSubmit={signIn} className="flex flex-col my-4 w-full px-12">
           <input value={email} onChange={( e ) => { setEmail( e.target.value ) }} type="email" placeholder="Email" className="border px-2 py-1 text-sm outline-none bg-gray-50 active:bg-gray-100 my-2" />
           <input value={password} onChange={( e ) => { setPassword( e.target.value ) }} type="password" placeholder="password" className="border px-2 py-1 text-sm outline-none bg-gray-50 active:bg-gray-100 my-2" />
