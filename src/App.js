@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import {orderBy, collection, onSnapshot, query } from "firebase/firestore"
 import Navbar from "./components/NavBar"
 import Post from "./components/Post"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import db from "./firebase"
@@ -34,8 +34,10 @@ function App () {
   return (
     <div className="bg-gray-100 w-full min-h-screen">
       <Routes>
+        <Route path="/" element={
+          localStorage.getItem("userName") ? (<Home posts={posts} />): <Navigate replace to="/signin" />
+        } />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/" element={<Home posts={posts} />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
 

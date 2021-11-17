@@ -3,6 +3,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { validateEmail } from "../utils"
 import AvatarUploader from "../components/AvatarUploader"
+import { Link  } from "react-router-dom";
 import imageCompression from 'browser-image-compression';
 
 function SignUp () {
@@ -107,7 +108,7 @@ function SignUp () {
           <input value={password} onChange={( e ) => { setPassword( e.target.value ) }} type="password" placeholder="password" className="border px-2 py-1 text-sm outline-none bg-gray-50 active:bg-gray-100 my-2" />
           <button type="submit" className={`bg-blue-500 text-white py-1 rounded-md my-2 ${validity ? 'opacity-100 cursor-pointer' : 'opacity-30 cursor-default'}`}>Sign Up</button>
         </form>
-        <p className="text-sm">Already Register?<a className="mx-1 text-blue-600 font-bold" href="/signin">Sign In</a></p>
+        <p className="text-sm">Already Register?<Link className="mx-1 text-blue-600 font-bold" to="/signin">Sign In</Link></p>
       </div>
     </div>
   )

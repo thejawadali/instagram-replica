@@ -1,5 +1,6 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom";
 import { validateEmail } from "../utils"
 
 
@@ -53,7 +54,9 @@ function SignIn () {
           <input value={password} onChange={( e ) => { setPassword( e.target.value ) }} type="password" placeholder="password" className="border px-2 py-1 text-sm outline-none bg-gray-50 active:bg-gray-100 my-2" />
           <button type="submit" className={`bg-blue-500 text-white py-1 rounded-md my-2 ${validity ? 'opacity-100 cursor-pointer' : 'opacity-30 cursor-default'}`}>Log In</button>
         </form>
-        <p className="text-sm">Don't have account?<a className="mx-1 text-blue-600 font-bold" href="/signup">Sign Up</a></p>
+        <p className="text-sm">Don't have account?
+        <Link className="mx-1 text-blue-600 font-bold" to="/signup">Sign Up</Link>
+        </p>
       </div>
     </div>
   )
