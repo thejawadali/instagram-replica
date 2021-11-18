@@ -1,11 +1,11 @@
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import {orderBy, collection, onSnapshot, query } from "firebase/firestore"
+import { Navigate, Route, Routes } from "react-router-dom"
 import Navbar from "./components/NavBar"
 import Post from "./components/Post"
-import { Routes, Route, Navigate } from "react-router-dom"
+import db from "./firebase"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
-import db from "./firebase"
 
 function App () {
 

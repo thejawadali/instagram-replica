@@ -1,16 +1,18 @@
-import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore"
-import { useState } from "react"
+import { addDoc, collection, doc, onSnapshot, query, serverTimestamp, updateDoc } from "firebase/firestore"
+import { useEffect, useState } from "react"
 import { FaRegComment } from "react-icons/fa"
 import { FiHeart, FiSend } from "react-icons/fi"
 import db from "../firebase"
 import { getFirstLetterOfUserName } from "../utils"
 import Avatar from "./Avatar"
+import Comment from "./Comment"
 
 
 function Post ( { post, postId } ) {
 
   const [isActive, setIsActive] = useState( false )
   const [caption, setCaption] = useState( "" )
+  const [comments, setComments] = useState( [] )
 
   function closeModal () {
     setIsActive( false )
@@ -35,6 +37,25 @@ function Post ( { post, postId } ) {
       console.error( error.message )
     }
   }
+
+  // fetch comments of a post
+  useEffect( () => {
+    async function fetchComments () {
+      try {
+        onSnapshot( query( collection( db, `insta-posts/${postId}/comments` ) ), snapShot => {
+          setComments( snapShot.docs.map( doc => ( {
+            id: doc.id,
+            comment: doc.data()
+          } ) ) )
+        } )
+      } catch ( error ) {
+        console.error( error.message )
+      }
+    }
+    fetchComments()
+  }, [postId] )
+
+
 
   async function share ( e ) {
     e.preventDefault()
@@ -77,11 +98,11 @@ function Post ( { post, postId } ) {
       {/* likes */}
       <p className="text-sm font-bold mx-4 mb-2">{post.likes || "0"} likes</p>
       {/* Caption */}
-      <p className="text-sm ml-4"><strong className="mr-1">{post.userName}</strong>{post.caption}</p>
+      <p className="text-sm mx-4"><strong className="mr-1">{post.userName}</strong>{post.caption}</p>
 
       {/* for now show only one comment */}
-      <p className="text-xs my-2 text-gray-400 cursor-pointer ml-4">View all {post.comments} comments</p>
-      <p className="text-sm ml-4"><strong className="mr-1">Hammad Asif</strong>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias quae ullam magni saepe dolorem, esse hic, illum ipsam, dolore temporibus aspernatur cumque quas ducimus. Voluptas deserunt asperiores praesentium eos laudantium.</p>
+      <p className="text-xs mt-2 text-gray-400 cursor-pointer ml-4">{comments.length} comments</p>
+      {comments.map( comment => <Comment key={comment.id} userName={comment.comment.userName} text={comment.comment.text} /> )}
 
       {/* Add Comment */}
       <form onSubmit={( e ) => { e.preventDefault() }} className="w-full flex px-4 border-t mt-4">
