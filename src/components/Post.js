@@ -1,9 +1,9 @@
-import { addDoc, collection, doc, onSnapshot, query, serverTimestamp, orderBy, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { FaRegComment } from "react-icons/fa"
 import { FiHeart, FiSend } from "react-icons/fi"
 import db from "../firebase"
-import { getFirstLetterOfUserName } from "../utils"
+import { getFirstLetterOfUserName, timeDifference } from "../utils"
 import Avatar from "./Avatar"
 import Comment from "./Comment"
 
@@ -42,8 +42,8 @@ function Post ( { post, postId } ) {
 
   async function postComment ( e ) {
     e.preventDefault()
-    if (!commentText) {
-      alert("Comment can not be empty")
+    if ( !commentText ) {
+      alert( "Comment can not be empty" )
       return
     }
     try {
@@ -60,6 +60,7 @@ function Post ( { post, postId } ) {
 
   // fetch comments of a post
   useEffect( () => {
+
     async function fetchComments () {
       try {
         onSnapshot( query( collection( db, `insta-posts/${postId}/comments` ), orderBy( "createdAt", "desc" ) ), snapShot => {
@@ -122,15 +123,20 @@ function Post ( { post, postId } ) {
       <p className="text-sm font-bold mx-4 mb-2">{post.likes || "0"} likes</p>
       {/* Caption */}
       <p className="text-sm mx-4"><strong className="mr-1">{post.userName}</strong>{post.caption}</p>
-
-      {/* for now show only one comment */}
+      {/* Comments */}
       <p className="text-xs mt-2 text-gray-400 cursor-pointer ml-4">{comments.length} comments</p>
       {comments.map( comment => <Comment key={comment.id} userName={comment.comment.userName} text={comment.comment.text} /> )}
 
+
+      {/* duration */}
+      {
+        post.createdAt &&
+        <p className="text-xs mt-3 text-gray-400 cursor-pointer mx-4">{timeDifference( post.createdAt.toDate() )}</p>
+      }
       {/* Add Comment */}
-      <form onSubmit={postComment} className="w-full flex px-4 border-t mt-4">
+      <form onSubmit={postComment} className="w-full flex px-4 border-t mt-2">
         <input id="commentInput" value={commentText} onChange={( e ) => { setCommentText( e.target.value ) }} className="flex-1 outline-none py-3 bg-transparent" type="text" placeholder="Add a comment..." />
-        <button type="submit" className={`font-semibold text-blue-600 ${commentText ? "opacity-100": "opacity-30 cursor-default"}`}>Post</button>
+        <button type="submit" className={`font-semibold text-blue-600 ${commentText ? "opacity-100" : "opacity-30 cursor-default"}`}>Post</button>
       </form>
 
       {/* Modal to share post */}

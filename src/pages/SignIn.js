@@ -31,7 +31,7 @@ function SignIn () {
   }
 
   function jugad() {
-    setEmail("bubloo@nit.com")
+    setEmail("mr@jin.com")
     setPassword("123123123")
   }
 
