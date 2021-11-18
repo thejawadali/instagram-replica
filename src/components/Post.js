@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, onSnapshot, query, serverTimestamp, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, onSnapshot, query, serverTimestamp, orderBy, updateDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { FaRegComment } from "react-icons/fa"
 import { FiHeart, FiSend } from "react-icons/fi"
@@ -13,6 +13,7 @@ function Post ( { post, postId } ) {
   const [isActive, setIsActive] = useState( false )
   const [caption, setCaption] = useState( "" )
   const [comments, setComments] = useState( [] )
+  const [commentText, setCommentText] = useState( "" )
 
   function closeModal () {
     setIsActive( false )
@@ -38,11 +39,30 @@ function Post ( { post, postId } ) {
     }
   }
 
+
+  async function postComment ( e ) {
+    e.preventDefault()
+    if (!commentText) {
+      alert("Comment can not be empty")
+      return
+    }
+    try {
+      setCommentText( "" )
+      await addDoc( collection( db, `insta-posts/${postId}/comments` ), {
+        text: commentText,
+        createdAt: serverTimestamp(),
+        userName: localStorage.getItem( "userName" )
+      } )
+    } catch ( error ) {
+      console.error( error.message )
+    }
+  }
+
   // fetch comments of a post
   useEffect( () => {
     async function fetchComments () {
       try {
-        onSnapshot( query( collection( db, `insta-posts/${postId}/comments` ) ), snapShot => {
+        onSnapshot( query( collection( db, `insta-posts/${postId}/comments` ), orderBy( "createdAt", "desc" ) ), snapShot => {
           setComments( snapShot.docs.map( doc => ( {
             id: doc.id,
             comment: doc.data()
@@ -90,7 +110,10 @@ function Post ( { post, postId } ) {
       <div className="flex px-2 py-4 justify-between">
         <div className="flex ">
           <FiHeart onClick={likePost} className="cursor-pointer w-6 h-6 font-thin mx-2" />
-          <FaRegComment className="cursor-pointer w-6 h-6 font-thin mx-2" />
+          <label htmlFor="commentInput">
+
+            <FaRegComment className="cursor-pointer w-6 h-6 font-thin mx-2" />
+          </label>
           <FiSend onClick={openModal} className="cursor-pointer w-6 h-6 font-thin mx-2" />
         </div>
         {/* <MdBookmarkBorder className="cursor-pointer w-7 h-7 font-thin mx-2" /> */}
@@ -105,9 +128,9 @@ function Post ( { post, postId } ) {
       {comments.map( comment => <Comment key={comment.id} userName={comment.comment.userName} text={comment.comment.text} /> )}
 
       {/* Add Comment */}
-      <form onSubmit={( e ) => { e.preventDefault() }} className="w-full flex px-4 border-t mt-4">
-        <input className="flex-1 outline-none py-3 bg-transparent" type="text" placeholder="Add a comment..." />
-        <button type="submit" className="text-blue-600 font-semibold">Post</button>
+      <form onSubmit={postComment} className="w-full flex px-4 border-t mt-4">
+        <input id="commentInput" value={commentText} onChange={( e ) => { setCommentText( e.target.value ) }} className="flex-1 outline-none py-3 bg-transparent" type="text" placeholder="Add a comment..." />
+        <button type="submit" className={`font-semibold text-blue-600 ${commentText ? "opacity-100": "opacity-30 cursor-default"}`}>Post</button>
       </form>
 
       {/* Modal to share post */}
