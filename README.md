@@ -1,7 +1,7 @@
 # Instagram clone
 This instagram clone is built with react js and firebase.
 
-###Demo
+
 See live [Demo](https://react-86446.firebaseapp.com/)
 
 ## Available Scripts
